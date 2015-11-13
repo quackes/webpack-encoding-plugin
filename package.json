@@ -7,9 +7,11 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
-    "type": "git"
+    "type": "git",
+    "url": "https://github.com/quackes/webpack-encoding-plugin.git"
   },
-  "author": "",
+  "keywords" : ["webpack", "encoding"],
+  "author": "Tobias Wingerter <tobias@quackes.de>",
   "license": "MIT",
   "devDependencies": {
     "webpack": "^1.12.4"

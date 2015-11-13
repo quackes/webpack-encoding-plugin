@@ -1,6 +1,6 @@
 {
   "name": "webpack-encoding-plugin",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Control Webpacks output encoding",
   "main": "EncodingPlugin.js",
   "scripts": {
@@ -10,7 +10,10 @@
     "type": "git",
     "url": "https://github.com/quackes/webpack-encoding-plugin.git"
   },
-  "keywords" : ["webpack", "encoding"],
+  "keywords": [
+    "webpack",
+    "encoding"
+  ],
   "author": "Tobias Wingerter <tobias@quackes.de>",
   "license": "MIT",
   "devDependencies": {

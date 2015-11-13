@@ -1,7 +1,8 @@
 # Webpack Encoding Plugin
 
-I ran into the problem of needing my js files outputted by webpack in another encoding.
-Thats, because the delivering webserver enforces the http contenttype. 
+Take contol over the encoding of emitted webpack assets.
+This can be useful, if the delivering webserver enforces a specifix content-type, 
+so that your js-code is not interpreted as utf-8 by the browser.
 
 ## Usage
 
@@ -12,16 +13,18 @@ install module
 setup webpack config
    
 ``` javascript
+var EncodingPlugin = require('webpack-encoding-plugin');
 module.exports = {
-    entry: './test.js',
+    entry: './entry.js',
     output: {
         path: '../dist',
         filename: 'bundle.js'
     },
-    resolveLoader: {
-        root: path.join(__dirname, '../../node_modules')
-    },
-
     plugins: [new encodingPlugin('iso-8859-1')]
 };
 ```
+
+## Encodings
+
+The Plugin uses [iconv-lite](https://www.npmjs.com/package/iconv-lite) to handle the encoding.
+A list of supported encodings can be found [here](https://github.com/ashtuchkin/iconv-lite/wiki/Supported-Encodings)

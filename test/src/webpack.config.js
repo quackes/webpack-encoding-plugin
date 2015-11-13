@@ -12,9 +12,6 @@ module.exports = {
         path: '../dist',
         filename: 'bundle.js'
     },
-    resolveLoader: {
-        root: path.join(__dirname, '../../node_modules')
-    },
 
     plugins: [new encodingPlugin('iso-8859-1')]
 };

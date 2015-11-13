@@ -1,5 +1,5 @@
 {
-  "name": "encoding-plugin",
+  "name": "webpack-encoding-plugin",
   "version": "0.0.1",
   "description": "Control Webpacks output encoding",
   "main": "EncodingPlugin.js",

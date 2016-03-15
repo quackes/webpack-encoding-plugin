@@ -12,7 +12,7 @@ EncodingPlugin.prototype.apply = function (compiler) {
 
         for (assetName in compilation.assets) {
             var asset = compilation.assets[assetName];
-            var converted = encoding.convert(asset._cachedSource, targetEncoding, 'UTF-8');
+            var converted = encoding.convert(asset.source(), targetEncoding, 'UTF-8');
             fs.writeFileSync(asset.existsAt, converted);
         }
         console.log('Assets converted to ' + targetEncoding);

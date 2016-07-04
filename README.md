@@ -20,7 +20,7 @@ module.exports = {
         path: '../dist',
         filename: 'bundle.js'
     },
-    plugins: [new encodingPlugin({
+    plugins: [new EncodingPlugin({
       encoding: 'iso-8859-1'
     })]
 };

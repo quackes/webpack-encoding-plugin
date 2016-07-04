@@ -17,10 +17,10 @@
   "author": "Tobias Wingerter <tobias@quackes.de>",
   "license": "MIT",
   "devDependencies": {
-    "webpack": "^1.12.4",
-    "webpack-sources": "^0.1.2"
   },
   "dependencies": {
+    "webpack": "^1.12.4",
+    "webpack-sources": "^0.1.2",
     "encoding": "^0.1.11"
   }
 }

@@ -1,6 +1,6 @@
 # Webpack Encoding Plugin
 
-Take contol over the encoding of emitted webpack assets.
+Take control over the encoding of emitted webpack assets.
 This can be useful, if the delivering webserver enforces a specific content-type, 
 so that your js-code is not interpreted as utf-8 by the browser.
 
@@ -20,9 +20,16 @@ module.exports = {
         path: '../dist',
         filename: 'bundle.js'
     },
-    plugins: [new encodingPlugin('iso-8859-1')]
+    plugins: [new encodingPlugin({
+      encoding: 'iso-8859-1'
+    })]
 };
 ```
+
+Additional options:
+
+`test`, `include`, `exclude` RegExp or array of RegExps to filter processed files
+(default `test` is `/(\.js|\.css)($|\?)/i`)
 
 ## Encodings
 

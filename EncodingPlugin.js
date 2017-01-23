@@ -36,7 +36,9 @@ EncodingPlugin.prototype.apply = function (compiler) {
                     map = sourceAndMap.map;
                 } else {
                     source = asset.source();
-                    map = asset.map();
+                    map = typeof asset.map === 'function' ?
+                        asset.map() :
+                        null;
                 }
 
                 var encodedSource = encoding.convert(source, options.encoding, 'UTF-8');

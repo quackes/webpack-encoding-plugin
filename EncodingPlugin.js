@@ -1,63 +1,58 @@
-var fs = require('fs');
-var RawSource = require('webpack-sources').RawSource;
-var SourceMapSource = require('webpack-sources').SourceMapSource;
-var encoding = require('encoding');
-var ModuleFilenameHelpers = require('webpack').ModuleFilenameHelpers;
-if (!ModuleFilenameHelpers) {
-    // See https://github.com/webpack/webpack/issues/2640
-    ModuleFilenameHelpers = require('webpack/lib/ModuleFilenameHelpers');
-}
+const fs = require('fs');
+const { RawSource, SourceMapSource } = require('webpack-sources');
+const encoding = require('encoding');
+const { ModuleFilenameHelpers } = require('webpack');
 
-function EncodingPlugin(options) {
-    if (typeof options === 'string') {
+const DEFAULT_OPTIONS = {
+    test: /(\.js|\.css)($|\?)/i,
+};
+
+class EncodingPlugin {
+    constructor(options = {}) {
         this.options = {
-            encoding: options
+            ...DEFAULT_OPTIONS,
+            ...(typeof options === 'string' ? { encoding: options } : options),
         };
-    } else {
-        this.options = options || {};
+    }
+
+    apply(compiler) {
+        const { options } = this;
+        const matchFileName = ModuleFilenameHelpers.matchObject.bind(undefined, options);
+
+        compiler.hooks.emit.tapAsync('EncodingPlugin', ({ assets, errors }, callback) => {
+            Object.keys(assets).filter(matchFileName).forEach(file => {
+                const asset = assets[file];
+                let source;
+                let map;
+                try {
+                    if (asset.sourceAndMap) {
+                        const sourceAndMap = asset.sourceAndMap();
+                        source = sourceAndMap.source;
+                        map = sourceAndMap.map;
+                    } else {
+                        source = asset.source();
+                        map = typeof asset.map === 'function' ?
+                            asset.map() :
+                            null;
+                    }
+
+                    const encodedSource = encoding.convert(source, options.encoding, 'UTF-8');
+                    if (asset.existsAt && fs.existsSync(asset.existsAt)) {
+                        fs.writeFileSync(asset.existsAt, encodedSource);
+                    }
+
+                    assets[file] = map ?
+                        new SourceMapSource(encodedSource, file, map) :
+                        new RawSource(encodedSource);
+                } catch (e) {
+                    errors.push(new Error(`${file} from EncodingPlugin: ${e.message}`));
+                }
+            });
+
+            console.log(`Assets converted to ${options.encoding}`);
+            callback();
+        });
     }
 }
-
-EncodingPlugin.prototype.apply = function (compiler) {
-    var options = this.options;
-    options.test = options.test || /(\.js|\.css)($|\?)/i;
-
-    var matchFileName = ModuleFilenameHelpers.matchObject.bind(undefined, options);
-
-    compiler.plugin('emit', function(compilation, callback) {
-        var files = Object.keys(compilation.assets).filter(matchFileName);
-        files.forEach(function(file) {
-            var asset = compilation.assets[file];
-            try {
-                var source, map;
-                if (asset.sourceAndMap) {
-                    var sourceAndMap = asset.sourceAndMap();
-                    source = sourceAndMap.source;
-                    map = sourceAndMap.map;
-                } else {
-                    source = asset.source();
-                    map = typeof asset.map === 'function' ?
-                        asset.map() :
-                        null;
-                }
-
-                var encodedSource = encoding.convert(source, options.encoding, 'UTF-8');
-                if (asset.existsAt && fs.existsSync(asset.existsAt)) {
-                    fs.writeFileSync(asset.existsAt, encodedSource);
-                }
-
-                compilation.assets[file] = map ?
-                  new SourceMapSource(encodedSource, file, map) :
-                  new RawSource(encodedSource);
-
-            } catch (e) {
-                compilation.errors.push(new Error(file + ' from EncodingPlugin: ' + e.message));
-            }
-        });
-
-        console.log('Assets converted to ' + options.encoding);
-        callback();
-    });
-};
 
 module.exports = EncodingPlugin;

@@ -1,3 +1,5 @@
+![Build Status](https://travis-ci.org/quackes/webpack-encoding-plugin.svg?branch=master)
+
 # Webpack Encoding Plugin
 
 Take control over the encoding of emitted webpack assets.

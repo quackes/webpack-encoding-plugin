@@ -37,3 +37,17 @@ Additional options:
 
 The Plugin uses [iconv-lite](https://www.npmjs.com/package/iconv-lite) to handle the encoding.
 A list of supported encodings can be found [here](https://github.com/ashtuchkin/iconv-lite/wiki/Supported-Encodings)
+
+## webpack-dev-server
+
+To use non-utf-8 encoding with webpack-dev-server, you must set the appropriate charset like so:
+
+``` JavaScript
+devServer:  {
+   headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/javascript; charset=windows-1251'
+   }
+   // ...
+}
+```

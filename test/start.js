@@ -10,8 +10,10 @@ const EncodingPlugin = require('..');
 webpack({
     entry: './src/test.js',
     output: {
-        path: path.resolve(__dirname, ''),
+        path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js'
     },
     plugins: [new EncodingPlugin('iso-8859-1')]
+}, ()=>{
+    console.log('done')
 });

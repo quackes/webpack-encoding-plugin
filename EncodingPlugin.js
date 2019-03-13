@@ -49,7 +49,6 @@ class EncodingPlugin {
                 }
             });
 
-            console.log(`Assets converted to ${options.encoding}`);
             callback();
         });
     }

@@ -6,7 +6,7 @@
     "scripts": {
         "test": "ava test/tests.js",
         "test:watch": "ava test/tests.js -w",
-        "postversion": "npm publish"
+        "postversion": "git push && git push --tags && npm publish"
     },
     "ava": {
         "sources": [

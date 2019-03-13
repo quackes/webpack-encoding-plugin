@@ -1,6 +1,6 @@
 {
     "name": "webpack-encoding-plugin",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "description": "Control Webpacks output encoding",
     "main": "EncodingPlugin.js",
     "scripts": {
@@ -12,7 +12,7 @@
         "sources": [
             "**/*.{js}",
             "!test/dist/**/*"
-            ]
+        ]
     },
     "repository": {
         "type": "git",
@@ -33,4 +33,3 @@
         "encoding": "^0.1.12"
     }
 }
-

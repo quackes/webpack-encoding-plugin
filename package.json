@@ -5,7 +5,8 @@
     "main": "EncodingPlugin.js",
     "scripts": {
         "test": "ava test/tests.js",
-        "test:watch": "ava test/tests.js -w"
+        "test:watch": "ava test/tests.js -w",
+        "postversion": "npm publish"
     },
     "ava": {
         "sources": [

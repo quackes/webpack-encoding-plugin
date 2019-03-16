@@ -23,7 +23,7 @@ class EncodingPlugin {
             pluginName, compilation => {
                 const { jsonpScript } = compilation.mainTemplate.hooks;
                 if (jsonpScript) {
-                    jsonpScript.tap(pluginName, s => s.replace(/["']utf-8["']/gi, `"${options.encoding}"`));
+                    jsonpScript.tap(pluginName, s => s.replace(/(["'])utf-8["']/gi, `$1${options.encoding}$1`));
                 }
                 return compilation;
             }

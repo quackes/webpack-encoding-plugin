@@ -21,10 +21,12 @@ class EncodingPlugin {
 
         compiler.hooks.compilation.tap(
             pluginName, compilation => {
-                const { jsonpScript } = compilation.mainTemplate.hooks;
-                if (jsonpScript) {
-                    jsonpScript.tap(pluginName, s => s.replace(/(["'])utf-8["']/gi, `$1${options.encoding}$1`));
-                }
+                ['jsonpScript', 'hotBootstrap'].forEach(id => {
+                    const hook = compilation.mainTemplate.hooks[id];
+                    if (hook) {
+                        hook.tap(pluginName, s => s.replace(/(["'])utf-8["']/gi, `$1${options.encoding}$1`));
+                    }
+                });
                 return compilation;
             }
         );
